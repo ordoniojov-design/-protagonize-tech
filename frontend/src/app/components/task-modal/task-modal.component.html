@@ -1,0 +1,60 @@
+<div class="modal-overlay" (click)="fechar.emit()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ tarefa ? 'Editar Tarefa' : 'Nova Tarefa' }}</h2>
+      <button class="btn-icon" (click)="fechar.emit()">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label for="titulo">Título *</label>
+        <input
+          id="titulo"
+          type="text"
+          formControlName="titulo"
+          placeholder="Ex: Implementar tela de login"
+          [class.invalid]="titulo?.invalid && titulo?.touched" />
+        <span class="error" *ngIf="titulo?.errors?.['required'] && titulo?.touched">
+          Título é obrigatório
+        </span>
+        <span class="error" *ngIf="titulo?.errors?.['maxlength'] && titulo?.touched">
+          Máximo 200 caracteres
+        </span>
+      </div>
+
+      <div class="field">
+        <label for="descricao">Descrição</label>
+        <textarea
+          id="descricao"
+          formControlName="descricao"
+          rows="3"
+          placeholder="Descreva a tarefa..."></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="status">Status</label>
+          <select id="status" formControlName="status">
+            <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="prioridade">Prioridade</label>
+          <select id="prioridade" formControlName="prioridade">
+            <option *ngFor="let p of prioridadeOptions" [value]="p">{{ p }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" (click)="fechar.emit()">Cancelar</button>
+        <button type="submit" class="btn-primary">
+          {{ tarefa ? 'Salvar alterações' : 'Criar tarefa' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

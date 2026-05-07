@@ -1,0 +1,50 @@
+# ─── IDEs e editores ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.swp
+
+# ─── .NET ──────────────────────────────────────────────────────────────────────
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+TestResults/
+
+# ─── Node / Angular ────────────────────────────────────────────────────────────
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Docker ────────────────────────────────────────────────────────────────────
+.dockerignore
+
+# ─── Sistema operacional ───────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Variáveis de ambiente e segredos ──────────────────────────────────────────
+.env
+.env.*
+appsettings.Production.json
+**/secrets.json
+
+# ─── Cobertura de testes ───────────────────────────────────────────────────────
+coverage/
+*.coverage
+*.coveragexml
+lcov.info

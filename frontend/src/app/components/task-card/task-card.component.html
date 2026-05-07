@@ -1,0 +1,28 @@
+<div class="card" [class]="prioridadeClass">
+  <div class="card-header">
+    <span class="prioridade-badge" [class]="prioridadeClass">{{ tarefa.prioridade }}</span>
+    <div class="card-actions">
+      <button class="btn-icon" title="Editar" (click)="editar.emit(tarefa)">
+        <span class="material-icons">edit</span>
+      </button>
+      <button class="btn-icon btn-danger" title="Excluir" (click)="excluir.emit(tarefa.id)">
+        <span class="material-icons">delete</span>
+      </button>
+    </div>
+  </div>
+
+  <h3 class="card-title">{{ tarefa.titulo }}</h3>
+  <p class="card-desc" *ngIf="tarefa.descricao">{{ tarefa.descricao }}</p>
+
+  <div class="card-footer">
+    <span class="data">{{ tarefa.dataCriacao | date:'dd/MM/yyyy' }}</span>
+    <div class="mover-actions">
+      <button
+        *ngFor="let s of proximosStatus"
+        class="btn-mover"
+        (click)="onMover(s)">
+        → {{ s }}
+      </button>
+    </div>
+  </div>
+</div>

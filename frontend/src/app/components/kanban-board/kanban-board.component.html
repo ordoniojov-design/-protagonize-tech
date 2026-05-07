@@ -1,0 +1,72 @@
+<div class="board-container">
+  <!-- Header -->
+  <header class="board-header">
+    <div class="header-left">
+      <span class="material-icons logo-icon">dashboard</span>
+      <div>
+        <h1>TaskBoard</h1>
+        <p class="subtitle">{{ tarefasConcluidas }}/{{ totalTarefas }} tarefas concluídas</p>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <select class="filtro-select" [(ngModel)]="filtroPrioridade">
+        <option value="">Todas as prioridades</option>
+        <option value="Alta">Alta</option>
+        <option value="Média">Média</option>
+        <option value="Baixa">Baixa</option>
+      </select>
+
+      <button class="btn-nova-tarefa" (click)="abrirModal()">
+        <span class="material-icons">add</span>
+        Nova Tarefa
+      </button>
+    </div>
+  </header>
+
+  <!-- Toast de mensagem -->
+  <div class="toast" *ngIf="mensagem" [class]="mensagem.tipo">
+    <span class="material-icons">{{ mensagem.tipo === 'sucesso' ? 'check_circle' : 'error' }}</span>
+    {{ mensagem.texto }}
+  </div>
+
+  <!-- Colunas Kanban -->
+  <div class="kanban-columns">
+    <div class="coluna" *ngFor="let coluna of colunas">
+      <div class="coluna-header" [style.border-top-color]="coluna.cor">
+        <div class="coluna-titulo">
+          <span class="material-icons" [style.color]="coluna.cor">{{ coluna.icone }}</span>
+          <span>{{ coluna.label }}</span>
+        </div>
+        <span class="coluna-count">{{ tarefasPorStatus(coluna.status).length }}</span>
+      </div>
+
+      <div class="coluna-body">
+        <app-task-card
+          *ngFor="let tarefa of tarefasPorStatus(coluna.status)"
+          [tarefa]="tarefa"
+          (editar)="abrirModal($event)"
+          (excluir)="excluir($event)"
+          (moverPara)="moverTarefa($event)">
+        </app-task-card>
+
+        <div class="coluna-vazia" *ngIf="tarefasPorStatus(coluna.status).length === 0">
+          <span class="material-icons">inbox</span>
+          <p>Nenhuma tarefa</p>
+        </div>
+      </div>
+
+      <button class="btn-add-coluna" (click)="abrirModal()">
+        <span class="material-icons">add</span> Adicionar tarefa
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<app-task-modal
+  *ngIf="modalAberto"
+  [tarefa]="tarefaEditando"
+  (salvar)="salvar($event)"
+  (fechar)="fecharModal()">
+</app-task-modal>
